@@ -1,2 +1,2 @@
-var ueditor = require('./lib')
-module.exports = ueditor;
+var upload = require('./lib')
+module.exports = upload;
