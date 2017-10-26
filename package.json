@@ -1,0 +1,32 @@
+{
+  "name": "upload",
+  "decription": "nodejs for upload",
+  "author": {
+    "name": "mahui"
+  },
+  "version": "1.0.0",
+  "dependencies": {
+    "busboy": "^0.2.9",
+    "fdfs": "^1.0.4",
+    "fs-extra": "^0.11.0",
+    "moment": "^2.19.1",
+    "node-snowflake": "0.0.1",
+    "qn": "^1.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yuketang/upload"
+  },
+  "main": "index.js",
+  "description": "",
+  "bugs": {
+    "url": "https://github.com/yuketang/upload/issues"
+  },
+  "homepage": "https://github.com/yuketang/upload",
+  "maintainers": [
+    {
+      "name": "mahui",
+      "email": "mahui@xuetangx.com"
+    }
+  ]
+}
