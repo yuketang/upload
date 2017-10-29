@@ -1,12 +1,13 @@
 # Node.js : upload
-此项目只供yuketang内部使用
+此项目只供yuketang内部使用，包含上传中间件，服务器上传功能
 
 ##Installation
 
 ```
- npm install github:yuketang/ws --save
+ npm install github:yuketang/upload --save
 ```
 
+# 中间件使用
 ### 上传配置
 
 ```javascript
@@ -14,13 +15,12 @@ app.use("/ueditor/ue", static_url, config = {}, callback);
 ```
 
 
+## 示例
 
-#示例
-
-## 上传到服务器本地（分布式服务慎用）
+### 上传到服务器本地（分布式服务慎用）
 
 ```javascript
-var upload = require("upload")
+var upload = require("upload").uploadMid;
 
 // config提供一些上传的参数，可以不传
 var config = {
@@ -49,12 +49,12 @@ app.use("/upload", upload(path.join(__dirname, 'public'), config, function(req, 
     });
 });
 ```
-## 七牛上传
+### 七牛上传
 
 当配置了 config.qn 图片则只会上传到七牛服务器而不会上传到项目目录。
 
 ```javascript
-var upload = require("upload")
+var upload = require("upload").uploadMid;
 
 // 支持七牛上传，如有需要请配置好config.qn参数，如果没有qn参数则存储在本地
 var config = {
@@ -63,7 +63,7 @@ var config = {
         secretKey: 'your secret key',
         bucket: 'your bucket name',
         origin: 'your cdn host',			//例如：http://{bucket}.u.qiniudn.com
-      	uploadURL: 'bucket region'			//华东：up.qiniup.com 或 up-z0.qiniup.com（默认）; 华北：up-z1.qiniup.com；华南：up-z2.qiniup.com；北美：up-na0.qiniup.com
+      	zone: 'bucket region'			//华东：up.qiniup.com 或 up-z0.qiniup.com（默认）; 华北：up-z1.qiniup.com；华南：up-z2.qiniup.com；北美：up-na0.qiniup.com
     },
   limit: 20 * 1024 *1024
 }
@@ -87,5 +87,45 @@ app.use("/ueditor/ue", ueditor(path.join(__dirname, 'public'), config, function(
     });
 });
 
+```
+
+# 服务器上传(七牛)
+### 获取token
+```
+var Upload = require('upload');
+var token = new Upload({
+       accessKey: 'your access key',
+       secretKey: 'your secret key',
+       bucket: 'your bucket name',
+       host: 'your cdn host',			//例如：http://{bucket}.u.qiniudn.com
+       zone: 'bucket region',			//华东：up.qiniup.com 或 up-z0.qiniup.com（默认）; 华北：up-z1.qiniup.com；华南：up-z2.qiniup.com；北美：up-na0.qiniup.com
+}).uploadToken({scope: "特殊的scope，默认为bucket", expires: '默认7200s', returnBody: "xxxxx"}) //这里的参数也可在new Upload的时候传递
+```
+
+### 上传文件
+```
+var Upload = require('upload');
+var upload = new Upload({
+       accessKey: 'your access key',
+       secretKey: 'your secret key',
+       bucket: 'your bucket name',
+       host: 'your cdn host',			//例如：http://{bucket}.u.qiniudn.com
+       zone: 'bucket region',			//华东：up.qiniup.com 或 up-z0.qiniup.com（默认）; 华北：up-z1.qiniup.com；华南：up-z2.qiniup.com；北美：up-na0.qiniup.com
+});
+
+upload.putFileUpload(filePath = '', key = '', cb); //没有cb，默认为Promise
+```
+
+### 上传文件流
+```
+var Upload = require('upload');
+var upload = new Upload({
+       accessKey: 'your access key',
+       secretKey: 'your secret key',
+       bucket: 'your bucket name',
+       host: 'your cdn host',			//例如：http://{bucket}.u.qiniudn.com
+       zone: 'bucket region',			//华东：up.qiniup.com 或 up-z0.qiniup.com（默认）; 华北：up-z1.qiniup.com；华南：up-z2.qiniup.com；北美：up-na0.qiniup.com
+});
+upload.putStreamUpload(stream = '', key, cb); //没有cb，默认为Promise
 ```
 
