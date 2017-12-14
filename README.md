@@ -1,6 +1,6 @@
 # Node.js : upload
 此项目只供yuketang内部使用，包含上传中间件，服务器上传功能
-yktcms wepushcms ueditor
+yktcms wepushcms
 
 ##Installation
 
